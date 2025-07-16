@@ -1,0 +1,20 @@
+###Get /
+GET http://localhost:8000
+
+###Register a user POST auth/register
+POST http://localhost:8000/auth/register
+Content-Type: application/json
+
+{
+    "user_name":"test1@gmail.com",
+    "password":"test1"
+}
+
+###Login a user POST auth/login
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+    "user_name":"test1@gmail.com",
+    "password":"test1"
+}

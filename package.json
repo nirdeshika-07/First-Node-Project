@@ -1,5 +1,5 @@
 {
-  "name": "secondproject",
+  "name": "firstproject",
   "version": "1.0.0",
   "description": "A full stack TODO application that uses a Nodejs backend, a SQLite database and JWT authentication",
   "main": "index.js",
