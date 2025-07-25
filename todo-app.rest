@@ -6,8 +6,8 @@ POST http://localhost:8000/auth/register
 Content-Type: application/json
 
 {
-    "user_name":"test1@gmail.com",
-    "password":"test1"
+    "username":"test1@gmail.com",
+    "password":"test1234"
 }
 
 ###Login a user POST auth/login
@@ -15,6 +15,21 @@ POST http://localhost:8000/auth/login
 Content-Type: application/json
 
 {
-    "user_name":"test1@gmail.com",
+    "username":"test1@gmail.com",
     "password":"test1"
+}
+
+### Fetch all todos GET /TODOS (protected)
+
+GET http://localhost:8000/todos
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUzNDMyNzI0LCJleHAiOjE3NTM1MTkxMjR9.TyAgWth1PP22OmNKNLvz6lLohxvKzxEiiAKP_cyXMo4
+
+### Creates a new tofo POST /TODOS(protected)
+
+POST http://localhost:8000/todos
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUzNDMyNzI0LCJleHAiOjE3NTM1MTkxMjR9.TyAgWth1PP22OmNKNLvz6lLohxvKzxEiiAKP_cyXMo4
+Content-Type: application/json
+
+{
+    "task":"Finish coding the projects"
 }

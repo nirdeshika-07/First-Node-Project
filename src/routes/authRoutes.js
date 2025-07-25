@@ -7,15 +7,15 @@ const router=express.Router()
 
 //Register a new user endpoint
 router.post('/register',(req,res)=>{
-    const {user_name,password}= req.body
+    const {username,password}= req.body
     //Encrypt the password
     const hashedPassword=bcrypt.hashSync(password,8)
     
-    //Save the user_name and hashedPassword in the db
+    //Save the username and hashedPassword in the db
 
     try{
-        const insertUser=db.prepare(`INSERT INTO users (user_name,password) VALUES (?,?)`)
-        const result = insertUser.run(user_name,hashedPassword)
+        const insertUser=db.prepare(`INSERT INTO users (username,password) VALUES (?,?)`)
+        const result = insertUser.run(username,hashedPassword)
         
         //Add their first todo for them
         const defaultTodo=`Hello! Add your first todo`
@@ -31,13 +31,13 @@ router.post('/register',(req,res)=>{
         console.log(err.message)
         res.sendStatus(503)
     }
-    res.sendStatus(201)
+    // res.sendStatus(201)
 })
 router.post('/login',(req,res)=>{
-    const {user_name, password}=req.body
+    const {username, password}=req.body
     try{
-        const getUser=db.prepare('SELECT * FROM users WHERE user_name=?')
-        const user=getUser.get(user_name)
+        const getUser=db.prepare('SELECT * FROM users WHERE username=?')
+        const user=getUser.get(username)
         if(!user){
             return res.status(404).send({message:"User not found"})
         }

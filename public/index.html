@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App | Node.JS Express.JS SQLite</title>
-    <link rel="stylesheet" href="/style.css" />
+    <title>Todo App </title>
+    <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/fanta.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
@@ -15,7 +15,7 @@
 <body>
     <section id="auth">
         <div>
-            <h2 className="sign-up-text">Login</h2>
+            <h2 class="sign-up-text">Login</h2>
             <p>Create an account!</p>
         </div>
 
@@ -51,17 +51,12 @@
 
     </main>
 </body>
-<script>
+
+    <script>
+        window.onload = function (){
+            console.log("Window loaded!");
+
     let token = localStorage.getItem('token')
-
-    let isLoading = false
-    let isAuthenticating = false
-    let isRegistration = false
-    let selectedTab = 'All'
-    let todos = []
-
-    const apiBase = '/'
-
     // elements
     const nav = document.querySelector('nav')
     const header = document.querySelector('header')
@@ -75,7 +70,15 @@
     const authBtn = document.getElementById('authBtn')
     const addTodoBtn = document.getElementById('addTodoBtn')
     // const deleteBtn = document.getElementById('')
-    // const updateBtn = 
+            console.log("authBtn:", authBtn);
+    let isLoading = false
+    let isAuthenticating = false
+    let isRegistration = false
+    let selectedTab = 'All'
+    let todos = []
+
+    const apiBase = 'http://localhost:8000/'
+
 
     // PAGE RENDERING LOGIC
     async function showDashboard() {
@@ -114,7 +117,7 @@
         })
     }
 
-    function changeTab(tab) {
+    window.changeTab= function (tab) {
         selectedTab = tab
         navElements.forEach(val => {
             if (val.innerText.includes(tab)) {
@@ -166,7 +169,7 @@
 
     // AUTH LOGIC
 
-    async function toggleIsRegister() {
+    window.toggleIsRegister=async function () {
         isRegistration = !isRegistration
         registerBtn.innerText = isRegistration ? 'Sign in' : 'Sign up'
         document.querySelector('#auth > div h2').innerText = isRegistration ? 'Sign Up' : 'Login'
@@ -174,11 +177,14 @@
         document.querySelector('.register-content button').innerText = isRegistration ? 'Sign in' : 'Sign up'
     }
 
-    async function authenticate() {
+    window.authenticate=async function () {
+        console.log("authenticate() called");
+        console.log("email:", email);
+        console.log("password:", password);
         // access email and pass values
         const emailVal = email.value
         const passVal = password.value
-
+        console.log("emailVal:", emailVal, "passVal:", passVal);
         // guard clauses... if authenticating, return
         if (
             isLoading ||
@@ -190,7 +196,7 @@
         ) { return }
 
         // reset error and set isAuthenticating to true
-        error.style.display = 'none'
+        textError.style.display = 'none'
         isAuthenticating = true
         authBtn.innerText = 'Authenticating...'
 
@@ -232,14 +238,12 @@
 
         } catch (err) {
             console.log(err.message)
-            error.innerText = err.message
-            error.style.display = 'block'
+            textError.innerText = err.message
+            textError.style.display = 'block'
         } finally {
             authBtn.innerText = 'Submit'
             isAuthenticating = false
         }
-
-
     }
 
     function logout() {
@@ -248,7 +252,7 @@
 
     // CRUD LOGIC
 
-    async function fetchTodos() {
+    window.fetchTodos=async function () {
         isLoading = true
         const response = await fetch(apiBase + 'todos', {
             headers: { 'Authorization': token }
@@ -259,7 +263,7 @@
         renderTodos()
     }
 
-    async function updateTodo(index) {
+    window.updateTodo=async function (index) {
         // set task complete status to true
         await fetch(apiBase + 'todos' + '/' + index, {
             method: 'PUT',
@@ -272,7 +276,7 @@
         fetchTodos()
     }
 
-    async function deleteTodo(index) {
+    window.deleteTodo=async function (index) {
         // set task complete status to true
         await fetch(apiBase + 'todos' + '/' + index, {
             method: 'DELETE',
@@ -283,7 +287,7 @@
         fetchTodos()
     }
 
-    async function addTodo() {
+    window.addTodo=async function () {
         // have to access this val later as it's rendered with js
         const todoInput = document.getElementById('todoInput')
         const task = todoInput.value
@@ -317,6 +321,7 @@
         }
         run()
     }
+    };
 </script>
 
 </html>
